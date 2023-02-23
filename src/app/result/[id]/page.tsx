@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 async function getData(id: string) {
-  const response = await fetch("http://localhost:3000/api/restaurant", {
+  const response = await fetch(`${process.env.VERCEL_URL}/api/restaurant`, {
     method: "POST",
     body: JSON.stringify({ id }),
   });
@@ -18,7 +18,7 @@ export default async function Result({ params }) {
 
   return (
     <main>
-      <h1>Result</h1>
+      <h1>결과</h1>
       <p>{`이름: ${data.name}`}</p>
       <p>{`좌표: ${data.coordinate}`}</p>
       <p>{`거리: ${data.distance}미터`}</p>
