@@ -1,20 +1,5 @@
 import Link from "next/link";
-
-async function getData(id: string) {
-  const response = await fetch(
-    `${process.env.NODE_ENV == "development" ? "http://" : "https://"}${
-      process.env.VERCEL_URL
-    }/api/restaurant`,
-    {
-      method: "POST",
-      body: JSON.stringify({ id }),
-    }
-  );
-
-  const data = await response.json();
-
-  return data;
-}
+import { getRestaurantData } from "../../loader/getRestaurantData";
 
 type Props = {
   params: { id: string };
@@ -23,7 +8,9 @@ type Props = {
 export default async function Result({ params }: Props) {
   const { id } = params;
 
-  const { data } = await getData(id);
+  if (id == "%5Bid%5D") return <main>Not found</main>;
+
+  const data = await getRestaurantData(id);
 
   return (
     <main>
