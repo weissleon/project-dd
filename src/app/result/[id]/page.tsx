@@ -1,10 +1,15 @@
 import Link from "next/link";
 
 async function getData(id: string) {
-  const response = await fetch(`${process.env.VERCEL_URL}/api/restaurant`, {
-    method: "POST",
-    body: JSON.stringify({ id }),
-  });
+  const response = await fetch(
+    `${process.env.NODE_ENV == "development" ? "http://" : "https://"}${
+      process.env.VERCEL_URL
+    }/api/restaurant`,
+    {
+      method: "POST",
+      body: JSON.stringify({ id }),
+    }
+  );
 
   const data = await response.json();
 
@@ -12,8 +17,8 @@ async function getData(id: string) {
 }
 
 type Props = {
-  params: {id: string}
-}
+  params: { id: string };
+};
 
 export default async function Result({ params }: Props) {
   const { id } = params;
