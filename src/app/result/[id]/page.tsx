@@ -11,7 +11,11 @@ async function getData(id: string) {
   return data;
 }
 
-export default async function Result({ params }) {
+type Props = {
+  params: {id: string}
+}
+
+export default async function Result({ params }: Props) {
   const { id } = params;
 
   const { data } = await getData(id);

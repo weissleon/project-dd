@@ -31,7 +31,7 @@ export default async function handler(
   });
 
   const data: RestaurantDataType[] = [];
-  const { properties } = response;
+  const { properties } = response as any;
   const name = properties.name["title"][0].text.content;
   const coordinate = properties.coordinate["rich_text"][0].text.content;
   const address = properties.address["rich_text"][0].text.content;
