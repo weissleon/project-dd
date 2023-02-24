@@ -1,17 +1,21 @@
 "use client";
 import { useRouter } from "next/navigation";
+import { useImmer } from "use-immer";
 
 export default function Home() {
   const router = useRouter();
 
+  const [isFetching, setIsFetching] = useImmer(false);
+
   const handleOnClick = async () => {
+    setIsFetching(true);
     const response = await fetch("api/pick");
     const data = await response.json();
     router.push(`./result/${data.pick}`);
   };
 
   return (
-    <main className="h-screen bg-yellow-200">
+    <main className={`h-screen bg-yellow-200`}>
       <nav className="h-14 bg-white grid grid-cols-3 shadow-md items-center justify-items-center">
         <h1 className="col-start-2 col-end-3 font-black uppercase text-xl text-transparent bg-gradient-to-r from-yellow-500 to-green-400 bg-clip-text select-none">
           Captain Menu
@@ -22,9 +26,14 @@ export default function Home() {
           <h1 className="font-black">오늘은 어디서 먹을까?</h1>
           <button
             onClick={handleOnClick}
-            className="bg-yellow-400 px-4 py-1 rounded-lg font-extrabold hover:bg-yellow-500 active:bg-yellow-600"
+            disabled={isFetching}
+            className={`${
+              !isFetching
+                ? "bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-600 cursor-pointer"
+                : "bg-gray-300 cursor-not-allowed"
+            }  px-4 py-1 rounded-lg font-extrabold `}
           >
-            뽑아보자
+            {!isFetching ? "뽑아보자" : "뽑는 중..."}
           </button>
         </div>
       </section>

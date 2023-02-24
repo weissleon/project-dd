@@ -9,6 +9,7 @@ type RestaurantDataType = {
   address: string;
   distance: string;
   time: string;
+  mapLink: string;
 };
 
 export async function getRestaurantData(id: string) {
@@ -28,6 +29,7 @@ export async function getRestaurantData(id: string) {
   const address = properties.address["rich_text"][0].text.content;
   const distance = properties.distance["rich_text"][0].text.content;
   const time = properties.time["rich_text"][0].text.content;
+  const mapLink = properties["map_link"]["rich_text"][0].text.content;
 
   const data = {
     id,
@@ -36,6 +38,7 @@ export async function getRestaurantData(id: string) {
     address,
     distance,
     time,
+    mapLink,
   };
 
   return data;

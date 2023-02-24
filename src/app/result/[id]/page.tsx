@@ -1,5 +1,6 @@
+import RetryButton from "@/components/client/RetryButton";
 import Link from "next/link";
-import { getRestaurantData } from "../../../loader/getRestaurantData";
+import { getRestaurantData } from "@/loader/getRestaurantData";
 
 type Props = {
   params: { id: string };
@@ -25,18 +26,22 @@ export default async function Result({ params }: Props) {
             결과
           </h1>
           <div className="row-start-2 row-end-3 flex flex-col">
-            <p className="text-3xl font-black self-center my-8">{`${data.name}`}</p>
+            <Link
+              href={data.mapLink}
+              className="text-blue-600 text-3xl font-black self-center my-8 underline-offset-8 underline"
+            >{`${data.name}`}</Link>
             {/* <p>{`좌표: ${data.coordinate}`}</p> */}
-            <p className="mx-4">{`주소: ${data.address}`}</p>
-            <p className="mx-4">{`거리: ${data.distance}미터`}</p>
-            <p className="mx-4">{`시간: ${data.time / 60}분`}</p>
+            {/* <p className="mx-4">{`주소: ${data.address}`}</p> */}
+
+            <p className="mx-4 self-center">
+              {`캠퍼스에서`}{" "}
+              <span className="text-green-500 font-extrabold text-xl">{`${
+                data.time / 60
+              }분`}</span>
+              {` 만에 갈 수 있어요!`}
+            </p>
           </div>
-          <Link
-            href={"/"}
-            className="bg-yellow-400 row-start-3 row-end-4 px-4 py-1 rounded-lg font-extrabold hover:bg-yellow-500 active:bg-yellow-600 justify-self-center self-center my-8"
-          >
-            다시 하기
-          </Link>
+          <RetryButton />
         </div>
       </section>
     </main>
